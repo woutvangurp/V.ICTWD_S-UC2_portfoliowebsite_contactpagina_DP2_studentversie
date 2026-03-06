@@ -7,30 +7,31 @@
 <form id="contactForm" asp-action="Index" method="post" novalidate>
     @Html.AntiForgeryToken()
     <div class="hp">
-        <label for="website">Laat dit veld leeg</label>
-        <input type="text" id="website" name="website" value="" />
+        <label for="website">website</label>
+        <input type="text" id="website" name="website" value="" tabindex="-1"/>
     </div>
     <div>
-        <input id="Name" name="Name" placeholder="Naam" tabindex="-1" />
-        <div id="nameErr" class="error"></div>
+        <label for="Name">Naam <span aria-label="verplicht" class="red">*</span></label>
+        <input id="Name" name="Name" placeholder="Naam" aria-required="true" aria-invalid="false" aria-describedby="nameErr" />
+        <div id="nameErr" class="error" role="alert" aria-live="polite"></div>
     </div>
     <div>
-        <label for="Email">E-mail</label>
-        <input id="Email" name="Email" placeholder="naam@domein.nl" />
-        <div id="emailErr" class="error"></div>
+        <label for="Email">E-mail <span aria-label="verplicht" class="red">*</span></label>
+        <input id="Email" name="Email" placeholder="naam@domein.nl" aria-required="true" aria-invalid="false" aria-describedby="emailErr" />
+        <div id="emailErr" class="error" role="alert" aria-live="polite"></div>
     </div>
     <div>
-        <label for="Subject">Onderwerp</label>
-        <input id="Subject" name="Subject" placeholder="Onderwerp" />
-        <div id="sbjErr" class="error"></div>
+        <label for="Subject">Onderwerp <span aria-label="verplicht" class="red">*</span></label>
+        <input id="Subject" name="Subject" placeholder="Onderwerp" aria-required="true" aria-invalid="false" aria-describedby="sbjErr" />
+        <div id="sbjErr" class="error" role="alert" aria-live="polite"></div>
     </div>
     <div>
-        <label for="Message" aria-hidden="true">Bericht</label> 
-        <textarea id="Message" name="Message" rows="5" placeholder="Je bericht"></textarea>
-        <div id="msgErr" class="error"></div>
+        <label for="Message">Bericht <span aria-label="verplicht" class="red">*</span></label>
+        <textarea id="Message" name="Message" rows="5" placeholder="Je bericht" aria-required="true" aria-invalid="false" aria-describedby="msgErr"></textarea>
+        <div id="msgErr" class="error" role="alert" aria-live="polite"></div>
     </div>
-    <div id="liveStatus"></div>
-    <div class="send-button" id="send-button" role="button" onclick="document.getElementById('contactForm').submit()">
+    <div id="liveStatus" runat="server"></div>
+    <button class="send-button" id="send-button" role="button" onclick="document.getElementById('contactForm').submit()">
         Versturen
-    </div>
+    </button>
 </form>

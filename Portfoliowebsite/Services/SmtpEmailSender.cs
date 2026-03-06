@@ -10,13 +10,13 @@ namespace Portfoliowebsite.Services
             var smtp = new SmtpClient("smtp.mailtrap.io", 2525)
             {
                 EnableSsl = false,
-                Credentials = new NetworkCredential("", "") // TODO: vervang met je eigen mailtrap credentials
+                Credentials = new NetworkCredential("username", "password")
             };
 
             var mail = new MailMessage();
             mail.From = new MailAddress("noreply@example.com", "Website");
 
-            mail.To.Add("contact@example.com");
+            mail.To.Add(Email);
 
             mail.Subject = $"Contact: {Subject}";
             mail.Body = $"Naam: {Name}\nEmail: {Email}\nBericht:\n{Message}";

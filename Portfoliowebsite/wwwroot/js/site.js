@@ -6,8 +6,11 @@ window.addEventListener('keydown', e => {
     }
 });
 
-function naiveEmailCheck(email) {
+function validEmailCheck(email) {
     return /^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$/.test(email);
+}
+function checkTLD(email) {
+    return /^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.(com|net|org|edu|gov|info|biz|io|co|nl|be|de|fr|it|es|pt|at|pl|cz|hu|ro|bg|gr|se|dk|fi|sk|si|lt|lv|ee|ie|hr|cy|lu|mt|eu|uk|ch|no|is)$/i.test(email);
 }
 
 function setupValidation() {
@@ -23,7 +26,7 @@ function setupValidation() {
     sendBtn.disabled = true;
 
     const isFormValid = () =>
-        naiveEmailCheck(email.value) &&
+        validEmailCheck(email.value) && checkTLD(email.value) &&
         name.value.length >= 2 && name.value.length <= 25 &&
         msg.value.length >= 5 && msg.value.length <= 150;
 
@@ -39,12 +42,14 @@ function setupValidation() {
     [email, name, msg].forEach(el => {
         el.addEventListener('input', () => {
             if (el === email) {
-                if (!el.value.contains('@')) {
+                if (!el.value.includes('@')) {
                     problemWithError('emailErr', el.value, 'de email bevat geen \'@\'');
-                } else if (!el.value.contains('.')) {
+                } else if (!el.value.includes('.')) {
                     problemWithError('emailErr', el.value, 'de email bevat geen \'.\'');
-                } else if (!naiveEmailCheck(el.value)) {
-                    genericError('emailErr', 'geen kloppende email');
+                } else if (!validEmailCheck(el.value)) {
+                    genericError('emailErr', 'dit is geen valide email');
+                } else if (!checkTLD(el.value)) {
+                    genericError('emailErr', 'deze TLD (denk aan .com, .net of .org) is niet toegestaan');
                 } else {
                     clearError('emailErr');
                 }
@@ -69,9 +74,11 @@ function setupValidation() {
             if (isFormValid()) {
                 sendBtn.disabled = false;
                 sendBtn.style.backgroundColor = 'green';
+                sendBtn.removeAttribute('aria-disabled');
             } else {
                 sendBtn.disabled = true;
                 sendBtn.style.backgroundColor = 'darkgray';
+                sendBtn.removeAttribute('aria-disabled', 'true');
             }
 
         });

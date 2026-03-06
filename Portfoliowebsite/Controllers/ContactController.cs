@@ -12,19 +12,21 @@ namespace Portfoliowebsite.Controllers
         public IActionResult Index() => View();
 
         [HttpPost]
-        public async Task<IActionResult> Index(string Name, string Email, string Subject, string Message)
+        public async Task<IActionResult> Index(string Name, string Email, string Subject, string Message, string website)
         {
+            if (!string.IsNullOrEmpty(website))
+            {
+                TempData["ThanksName"] = Name;
+                TempData["ThanksEmail"] = Email;
+                TempData["ThanksMessage"] = Message;
 
-            //check als alles ingevuld is!!
-            if (string.IsNullOrWhiteSpace(Name))
-                throw new ArgumentNullException(nameof(Name));
-            if (string.IsNullOrWhiteSpace(Email))
-                throw new ArgumentNullException(nameof(Email));
-            if (string.IsNullOrWhiteSpace(Subject))
-                throw new ArgumentNullException(nameof(Subject));
-            if (string.IsNullOrWhiteSpace(Message))
-                throw new ArgumentNullException(nameof(Message));
-
+                return RedirectToAction(nameof(Thanks));
+            }
+            if (string.IsNullOrWhiteSpace(Name) || string.IsNullOrWhiteSpace(Email) || string.IsNullOrWhiteSpace(Subject) || string.IsNullOrWhiteSpace(Message))
+            {
+                TempData["Error"] = "Vul alstublieft alle velden in.";
+                return View();
+            }
 
             await _email.SendAsync(Name, Email, Subject, Message);
 
