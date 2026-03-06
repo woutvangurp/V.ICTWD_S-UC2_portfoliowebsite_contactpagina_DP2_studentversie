@@ -1,12 +1,4 @@
-﻿window.addEventListener('contextmenu', e => e.preventDefault()); 
-
-window.addEventListener('keydown', e => {
-    if (e.key === 'Tab') {
-        e.preventDefault();
-    }
-});
-
-function validEmailCheck(email) {
+﻿function validEmailCheck(email) {
     return /^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$/.test(email);
 }
 function checkTLD(email) {
@@ -19,7 +11,6 @@ function setupValidation() {
     const email = document.getElementById('Email');
     const name = document.getElementById('Name');
     const msg = document.getElementById('Message');
-    const status = document.getElementById('liveStatus');
 
     const sendBtn = document.getElementById('send-button');
     sendBtn.style.backgroundColor = 'darkgray';
@@ -43,31 +34,43 @@ function setupValidation() {
         el.addEventListener('input', () => {
             if (el === email) {
                 if (!el.value.includes('@')) {
+                    el.setAttribute('aria-invalid', 'true');
                     problemWithError('emailErr', el.value, 'de email bevat geen \'@\'');
                 } else if (!el.value.includes('.')) {
+                    el.setAttribute('aria-invalid', 'true');
                     problemWithError('emailErr', el.value, 'de email bevat geen \'.\'');
                 } else if (!validEmailCheck(el.value)) {
+                    el.setAttribute('aria-invalid', 'true');
                     genericError('emailErr', 'dit is geen valide email');
                 } else if (!checkTLD(el.value)) {
+                    el.setAttribute('aria-invalid', 'true');
                     genericError('emailErr', 'deze TLD (denk aan .com, .net of .org) is niet toegestaan');
                 } else {
                     clearError('emailErr');
+                    el.setAttribute('aria-invalid', 'false');
+
                 }
             } else if (el === name) {
                 if (el.value.length < 2) {
+                    el.setAttribute('aria-invalid', 'true');
                     genericError('nameErr', 'naam is te kort');
                 } else if (el.value.length > 25) {
+                    el.setAttribute('aria-invalid', 'true');
                     genericError('nameErr', 'naam is te lang');
                 } else {
                     clearError('nameErr');
+                    el.setAttribute('aria-invalid', 'false');
                 }
             } else if (el === msg) {
                 if (el.value.length < 5) {
+                    el.setAttribute('aria-invalid', 'true');
                     genericError('msgErr', 'bericht is te klein');
                 } else if (el.value.length > 150) {
+                    el.setAttribute('aria-invalid', 'true');
                     genericError('msgErr', 'bericht is te lang, probeer in te korten');
                 } else {
                     clearError('msgErr');
+                    el.setAttribute('aria-invalid', 'false');
                 }
             }
 
@@ -78,7 +81,7 @@ function setupValidation() {
             } else {
                 sendBtn.disabled = true;
                 sendBtn.style.backgroundColor = 'darkgray';
-                sendBtn.removeAttribute('aria-disabled', 'true');
+                sendBtn.setAttribute('aria-disabled', 'true');
             }
 
         });

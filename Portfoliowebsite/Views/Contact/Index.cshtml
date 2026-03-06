@@ -30,8 +30,13 @@
         <textarea id="Message" name="Message" rows="5" placeholder="Je bericht" aria-required="true" aria-invalid="false" aria-describedby="msgErr"></textarea>
         <div id="msgErr" class="error" role="alert" aria-live="polite"></div>
     </div>
-    <div id="liveStatus" runat="server"></div>
-    <button class="send-button" id="send-button" role="button" onclick="document.getElementById('contactForm').submit()">
+    <div id="liveStatus" role="status" aria-live="polite">
+        @if (TempData["StatusMessage"] != null)
+        {
+            <span class="error">@TempData["StatusMessage"]</span>
+        }
+    </div>
+    <button class="send-button" id="send-button">
         Versturen
     </button>
 </form>

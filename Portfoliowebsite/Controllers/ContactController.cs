@@ -24,7 +24,7 @@ namespace Portfoliowebsite.Controllers
             }
             if (string.IsNullOrWhiteSpace(Name) || string.IsNullOrWhiteSpace(Email) || string.IsNullOrWhiteSpace(Subject) || string.IsNullOrWhiteSpace(Message))
             {
-                TempData["Error"] = "Vul alstublieft alle velden in.";
+                TempData["StatusMessage"] = "Vul alstublieft alle velden in.";
                 return View();
             }
 
