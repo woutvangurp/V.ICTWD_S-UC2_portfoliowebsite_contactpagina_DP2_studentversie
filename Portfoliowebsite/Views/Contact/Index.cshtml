@@ -15,13 +15,14 @@
         <div id="nameErr" class="error"></div>
     </div>
     <div>
-        <label for="EmailX">E-mail</label>
+        <label for="Email">E-mail</label>
         <input id="Email" name="Email" placeholder="naam@domein.nl" />
         <div id="emailErr" class="error"></div>
     </div>
     <div>
         <label for="Subject">Onderwerp</label>
         <input id="Subject" name="Subject" placeholder="Onderwerp" />
+        <div id="sbjErr" class="error"></div>
     </div>
     <div>
         <label for="Message" aria-hidden="true">Bericht</label> 
@@ -29,7 +30,7 @@
         <div id="msgErr" class="error"></div>
     </div>
     <div id="liveStatus"></div>
-    <div class="send-button" role="button" onclick="document.getElementById('contactForm').submit()">
+    <div class="send-button" id="send-button" role="button" onclick="document.getElementById('contactForm').submit()">
         Versturen
     </div>
 </form>

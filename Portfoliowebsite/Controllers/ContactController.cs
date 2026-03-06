@@ -14,6 +14,18 @@ namespace Portfoliowebsite.Controllers
         [HttpPost]
         public async Task<IActionResult> Index(string Name, string Email, string Subject, string Message)
         {
+
+            //check als alles ingevuld is!!
+            if (string.IsNullOrWhiteSpace(Name))
+                throw new ArgumentNullException(nameof(Name));
+            if (string.IsNullOrWhiteSpace(Email))
+                throw new ArgumentNullException(nameof(Email));
+            if (string.IsNullOrWhiteSpace(Subject))
+                throw new ArgumentNullException(nameof(Subject));
+            if (string.IsNullOrWhiteSpace(Message))
+                throw new ArgumentNullException(nameof(Message));
+
+
             await _email.SendAsync(Name, Email, Subject, Message);
 
             TempData["ThanksName"] = Name;
